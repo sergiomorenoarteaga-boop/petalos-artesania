@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pétalos Artesanía | Boutique de Lujo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           VARIABLES Y RESET
+        ============================================ */
+        :root {
+            --color-primario: #D4AF37;
+            --color-secundario: #8B7355;
+            --color-acento: #C9A882;
+            --color-fondo: #FAF8F3;
+            --color-texto: #2C2C2C;
+            --color-texto-claro: #666;
+            --fuente-titulo: 'Cormorant Garamond', serif;
+            --fuente-texto: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--fuente-texto);
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           NAVEGACIÓN MÓVIL
+        ============================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            padding: 0;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-family: var(--fuente-titulo);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primario);
+            text-decoration: none;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-primario);
+            cursor: pointer;
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        nav ul.active {
+            max-height: 600px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        nav ul li {
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--color-texto);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: var(--color-fondo);
+            color: var(--color-primario);
+            padding-left: 30px;
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero-section {
+            margin-top: 60px;
+            height: 85vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 90%;
+            z-index: 2;
+        }
+
+        .slide-content h1 {
+            font-family: var(--fuente-titulo);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .slide-content p {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            font-weight: 300;
+        }
+
+        /* ============================================
+           SECCIONES DE PRODUCTOS
+        ============================================ */
+        main {
+            padding: 20px 15px;
+        }
+
+        .seccion {
+            margin-bottom: 60px;
+            scroll-margin-top: 80px;
+        }
+
+        .seccion-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .seccion-header h2 {
+            font-family: var(--fuente-titulo);
+            font-size: 2rem;
+            color: var(--color-primario);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .seccion-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--color-acento);
+        }
+
+        .seccion-descripcion {
+            color: var(--color-texto-claro);
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* ============================================
+           GALERÍA DE PRODUCTOS
+        ============================================ */
+        .galeria {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .producto {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .producto-imagen {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+            background: #f5f5f5;
+        }
+
+        .producto-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .producto:hover .producto-imagen img {
+            transform: scale(1.08);
+        }
+
+        .producto-info {
+            padding: 20px;
+        }
+
+        .producto-info h3 {
+            font-family: var(--fuente-titulo);
+            font-size: 1.4rem;
+            color: var(--color-texto);
+            margin-bottom: 8px;
+        }
+
+        .producto-info p {
+            color: var(--color-texto-claro);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .producto-detalles {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .material {
+            color: var(--color-secundario);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .precio {
+            color: var(--color-primario);
+            font-weight: 600;
+            font-size: 1.3rem;
+            font-family: var(--fuente-titulo);
+        }
+
+        /* Placeholder cuando no hay imagen */
+        .no-imagen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #999;
+            font-size: 3rem;
+        }
+
+        /* ============================================
+           CONTACTO
+        ============================================ */
+        .contacto-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .contacto-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            font-family: var(--fuente-texto);
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primario);
+        }
+
+        .form-group textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        .btn-enviar {
+            width: 100%;
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-acento) 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-enviar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .contacto-info {
+            padding: 20px 0;
+        }
+
+        .contacto-info h3 {
+            font-family: var(--fuente-titulo);
+            font-size: 1.5rem;
+            color: var(--color-primario);
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--color-fondo);
+            border-radius: 8px;
+        }
+
+        .info-item i {
+            font-size: 1.3rem;
+            color: var(--color-primario);
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+
+        .info-item p {
+            color: var(--color-texto);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        footer {
+            background: linear-gradient(135deg, var(--color-secundario) 0%, var(--color-primario) 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 25px;
+            margin-top: 60px;
+        }
+
+        .social-links {
+            margin-bottom: 25px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin: 0 8px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: var(--color-primario);
+            transform: translateY(-5px);
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        /* ============================================
+           RESPONSIVE TABLET
+        ============================================ */
+        @media (min-width: 600px) {
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .slide-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .slide-content p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE DESKTOP
+        ============================================ */
+        @media (min-width: 1024px) {
+            .menu-toggle {
+                display: none;
+            }
+
+            nav ul {
+                max-height: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+            }
+
+            nav ul li {
+                border: none;
+            }
+
+            nav ul li a {
+                padding: 20px 25px;
+            }
+
+            nav ul li a:hover {
+                padding-left: 25px;
+                background: transparent;
+            }
+
+            .galeria {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 25px;
+            }
+
+            .contacto-container {
+                flex-direction: row;
+            }
+
+            main {
+                padding: 40px 60px;
+            }
+
+            .seccion-header h2 {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* ============================================
+           ANIMACIONES
+        ============================================ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .producto {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .producto:nth-child(1) { animation-delay: 0.1s; }
+        .producto:nth-child(2) { animation-delay: 0.2s; }
+        .producto:nth-child(3) { animation-delay: 0.3s; }
+        .producto:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         NAVEGACIÓN
+    ============================================ -->
+    <nav>
+        <div class="nav-header">
+            <a href="#inicio" class="logo">🌸 Pétalos</a>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <ul id="navMenu">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#abanicos">Abanicos</a></li>
+            <li><a href="#decoupage">Decoupage</a></li>
+            <li><a href="#pantallas">Pantallas</a></li>
+            <li><a href="#bolsos">Bolsos & Carteras</a></li>
+            <li><a href="#accesorios">Accesorios</a></li>
+            <li><a href="#ropa">Ropa & Complementos</a></li>
+            <li><a href="#zapatillas">Zapatillas</a></li>
+            <li><a href="#cristaleria">Cristalería</a></li>
+            <li><a href="#joyeria">Joyería</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <section id="inicio" class="hero-section">
+        <img src="fondo.jpg" alt="Pétalos Artesanía" class="hero-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22%3E%3Crect fill=%22%23D4AF37%22 width=%22800%22 height=%22600%22/%3E%3C/svg%3E'">
+        <div class="slide-content">
+            <h1>🌸 Pétalos Artesanía 🌸</h1>
+            <p>Arte y tradición en cada pieza</p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CONTENIDO PRINCIPAL
+    ============================================ -->
+    <main>
+        <!-- ABANICOS -->
+        <section id="abanicos" class="seccion">
+            <div class="seccion-header">
+                <h2>Abanicos Artesanales</h2>
+                <p class="seccion-descripcion">Elegancia y tradición española en cada detalle</p>
+            </div>
+            <div class="galeria" id="galeria-abanicos"></div>
+        </section>
+
+        <!-- DECOUPAGE -->
+        <section id="decoupage" class="seccion">
+            <div class="seccion-header">
+                <h2>Decoupage</h2>
+                <p class="seccion-descripcion">Arte decorativo único y personalizado</p>
+            </div>
+            <div class="galeria" id="galeria-decoupage"></div>
+        </section>
+
+        <!-- PANTALLAS -->
+        <section id="pantallas" class="seccion">
+            <div class="seccion-header">
+                <h2>Pantallas Decorativas</h2>
+                <p class="seccion-descripcion">Ilumina tu hogar con diseños exclusivos</p>
+            </div>
+            <div class="galeria" id="galeria-pantallas"></div>
+        </section>
+
+        <!-- BOLSOS & CARTERAS -->
+        <section id="bolsos" class="seccion">
+            <div class="seccion-header">
+                <h2>Bolsos & Carteras</h2>
+                <p class="seccion-descripcion">Complementos artesanales de alta calidad</p>
+            </div>
+            <div class="galeria" id="galeria-bolsos"></div>
+        </section>
+
+        <!-- ACCESORIOS -->
+        <section id="accesorios" class="seccion">
+            <div class="seccion-header">
+                <h2>Accesorios</h2>
+                <p class="seccion-descripcion">Detalles únicos para cada ocasión</p>
+            </div>
+            <div class="galeria" id="galeria-accesorios"></div>
+        </section>
+
+        <!-- ROPA & COMPLEMENTOS -->
+        <section id="ropa" class="seccion">
+            <div class="seccion-header">
+                <h2>Ropa & Complementos</h2>
+                <p class="seccion-descripcion">Moda artesanal con estilo propio</p>
+            </div>
+            <div class="galeria" id="galeria-ropa"></div>
+        </section>
+
+        <!-- ZAPATILLAS -->
+        <section id="zapatillas" class="seccion">
+            <div class="seccion-header">
+                <h2>Zapatillas Personalizadas</h2>
+                <p class="seccion-descripcion">Diseños exclusivos pintados a mano</p>
+            </div>
+            <div class="galeria" id="galeria-zapatillas"></div>
+        </section>
+
+        <!-- CRISTALERÍA -->
+        <section id="cristaleria" class="seccion">
+            <div class="seccion-header">
+                <h2>Cristalería Artística</h2>
+                <p class="seccion-descripcion">Piezas únicas de cristal soplado</p>
+            </div>
+            <div class="galeria" id="galeria-cristaleria"></div>
+        </section>
+
+        <!-- JOYERÍA -->
+        <section id="joyeria" class="seccion">
+            <div class="seccion-header">
+                <h2>Joyería Artesanal</h2>
+                <p class="seccion-descripcion">Diseños exclusivos hechos a mano</p>
+            </div>
+            <div class="galeria" id="galeria-joyeria"></div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="seccion contacto-section">
+            <div class="seccion-header">
+                <h2>Contacto</h2>
+                <p class="seccion-descripcion">Estamos aquí para ayudarte</p>
+            </div>
+            <div class="contacto-container">
+                <form id="contacto-form">
+                    <div class="form-group">
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Tu email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="telefono" name="telefono" placeholder="Teléfono (opcional)">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="mensaje" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-enviar">Enviar Mensaje</button>
+                </form>
+                
+                <div class="contacto-info">
+                    <h3>Información de Contacto</h3>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+34 634 86 55 26</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>petalos_artefloral@gmail.com</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Calle Doctor Ochoa 12<br>Los Palacios y Villafranca<br>Sevilla, España</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+        <p><strong>© 2024 Pétalos Artesanía</strong></p>
+        <p>Todos los derechos reservados</p>
+        <p>petalos_artefloral@gmail.com</p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT
+    ============================================ -->
+    <script>
+        // ========================================
+        // CONFIGURACIÓN DE PRODUCTOS
+        // ========================================
+        const productos = {
+            abanicos: [
+                { nombre: 'Abanico Floral Clásico', descripcion: 'Diseño tradicional con motivos florales pintados a mano', material: 'Madera y Tela', precio: '45€' },
+                { nombre: 'Abanico Vintage Dorado', descripcion: 'Elegante pieza con acabados en oro envejecido', material: 'Madera Noble', precio: '65€' },
+                { nombre: 'Abanico de Encaje', descripcion: 'Delicado encaje artesanal con varillas de nácar', material: 'Encaje y Nácar', precio: '85€' },
+                { nombre: 'Abanico Sevillano', descripcion: 'Auténtico abanico andaluz con bordados exclusivos', material: 'Seda Natural', precio: '95€' }
+            ],
+            decoupage: [
+                { nombre: 'Caja Vintage Floral', descripcion: 'Caja decorativa con técnica de decoupage y motivos florales', material: 'Madera Reciclada', precio: '35€' },
+                { nombre: 'Bandeja Shabby Chic', descripcion: 'Bandeja decorativa estilo vintage con acabado envejecido', material: 'MDF y Papel', precio: '42€' },
+                { nombre: 'Espejo Decorativo', descripcion: 'Marco decorado con técnica mixta y detalles dorados', material: 'Madera y Resina', precio: '58€' },
+                { nombre: 'Joyero Artesanal', descripcion: 'Joyero personalizado con diseños románticos', material: 'Madera Maciza', precio: '48€' }
+            ],
+            pantallas: [
+                { nombre: 'Pantalla Floral Rosa', descripcion: 'Lámpara con pantalla decorada en tonos pastel', material: 'Tela y Estructura', precio: '68€' },
+                { nombre: 'Pantalla Vintage Gold', descripcion: 'Elegante pantalla con detalles dorados', material: 'Lino Premium', precio: '75€' },
+                { nombre: 'Pantalla Romántica', descripcion: 'Diseño delicado con encajes y cintas de seda', material: 'Organza y Encaje', precio: '82€' },
+                { nombre: 'Pantalla Clásica Beige', descripcion: 'Diseño atemporal para cualquier ambiente', material: 'Algodón Natural', precio: '55€' }
+            ],
+            bolsos: [
+                { nombre: 'Bolso Clutch Bordado', descripcion: 'Elegante clutch con bordados florales hechos a mano', material: 'Terciopelo', precio: '95€' },
+                { nombre: 'Cartera de Piel Vintage', descripcion: 'Cartera artesanal con acabado vintage único', material: 'Piel Natural', precio: '78€' },
+                { nombre: 'Bolso Tote Floral', descripcion: 'Espacioso y elegante con estampados exclusivos', material: 'Lona Premium', precio: '65€' },
+                { nombre: 'Bolso Bandolera Boho', descripcion: 'Estilo bohemio con detalles artesanales', material: 'Cuero y Tela', precio: '89€' }
+            ],
+            accesorios: [
+                { nombre: 'Broche Floral Vintage', descripcion: 'Broche decorativo con piedras y detalles en oro', material: 'Latón y Cristal', precio: '28€' },
+                { nombre: 'Peineta Artesanal', descripcion: 'Peineta decorada con flores de porcelana', material: 'Acetato y Porcelana', precio: '45€' },
+                { nombre: 'Diadema Romantic', descripcion: 'Diadema con flores y perlas artificiales', material: 'Tela y Perlas', precio: '38€' },
+                { nombre: 'Pasador de Pelo Dorado', descripcion: 'Set de pasadores con acabados en oro', material: 'Metal Noble', precio: '32€' }
+            ],
+            ropa: [
+                { nombre: 'Chal Bordado', descripcion: 'Elegante chal con bordados florales artesanales', material: 'Seda Natural', precio: '125€' },
+                { nombre: 'Pañuelo de Seda', descripcion: 'Pañuelo pintado a mano con diseños exclusivos', material: 'Seda 100%', precio: '68€' },
+                { nombre: 'Fajín Sevillano', descripcion: 'Auténtico fajín andaluz bordado a mano', material: 'Seda y Hilo Oro', precio: '145€' },
+                { nombre: 'Mantoncillo Floral', descripcion: 'Mantoncillo con flecos y bordados tradicionales', material: 'Seda Bordada', precio: '168€' }
+            ],
+            zapatillas: [
+                { nombre: 'Zapatillas Flor de Cerezo', descripcion: 'Diseño exclusivo pintado a mano con flores japonesas', material: 'Lona Premium', precio: '85€' },
+                { nombre: 'Sneakers Vintage Garden', descripcion: 'Motivos florales vintage en tonos pastel', material: 'Textil Personalizado', precio: '92€' },
+                { nombre: 'Zapatillas Boho Chic', descripcion: 'Estilo bohemio con detalles artesanales únicos', material: 'Lona y Cuero', precio: '98€' },
+                { nombre: 'Alpargatas Andaluzas', descripcion: 'Alpargatas personalizadas con motivos andaluces', material: 'Yute y Tela', precio: '75€' }
+            ],
+            cristaleria: [
+                { nombre: 'Jarrón Cristal Soplado', descripcion: 'Pieza única de cristal soplado artesanalmente', material: 'Cristal de Murano', precio: '145€' },
+                { nombre: 'Copa Decorativa Gold', descripcion: 'Copa decorativa con detalles en pan de oro', material: 'Cristal y Oro', precio: '68€' },
+                { nombre: 'Botella Vintage', descripcion: 'Botella decorativa con grabados artesanales', material: 'Cristal Tallado', precio: '85€' },
+                { nombre: 'Plato Decorativo', descripcion: 'Plato de cristal pintado a mano', material: 'Cristal Premium', precio: '55€' }
+            ],
+            joyeria: [
+                { nombre: 'Collar Floral Dorado', descripcion: 'Delicado collar con flores en filigrana', material: 'Oro 18k', precio: '185€' },
+                { nombre: 'Pendientes Vintage Rose', descripcion: 'Pendientes con piedras naturales y acabado vintage', material: 'Plata 925', precio: '95€' },
+                { nombre: 'Pulsera Artesanal', descripcion: 'Pulsera con charms personalizados y piedras', material: 'Plata y Cuarzo', precio: '125€' },
+                { nombre: 'Anillo Solitario Floral', descripcion: 'Anillo único con diseño floral y circonitas', material: 'Oro Blanco 18k', precio: '245€' }
+            ]
+        };
+
+        // ========================================
+        // FUNCIÓN PARA CARGAR PRODUCTOS
+        // ========================================
+        function cargarProductos(categoria, nombreCategoria) {
+            const galeria = document.getElementById(`galeria-${categoria}`);
+            const items = productos[categoria];
+
+            items.forEach((producto, index) => {
+                const numImagen = index + 1;
+                const nombreImagen = `${categoria}${numImagen}.jpg`;
+                
+                const productoDiv = document.createElement('div');
+                productoDiv.className = 'producto';
+                
+                productoDiv.innerHTML = `
+                    <div class="producto-imagen">
+                        <img src="${nombreImagen}" 
+                             alt="${producto.nombre}" 
+                             onerror="this.parentElement.innerHTML='<div class=\'no-imagen\'><i class=\'fas fa-image\'></i></div>'">
+                    </div>
+                    <div class="producto-info">
+                        <h3>${producto.nombre}</h3>
+                        <p>${producto.descripcion}</p>
+                        <div class="producto-detalles">
+                            <span class="material">${producto.material}</span>
+                            <span class="precio">${producto.precio}</span>
+                        </div>
+                    </div>
+                `;
+                
+                galeria.appendChild(productoDiv);
+            });
+        }
+
+        // ========================================
+        // MENÚ MÓVIL
+        // ========================================
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+            });
+        });
+
+        // ========================================
+        // FORMULARIO DE CONTACTO
+        // ========================================
+        document.getElementById('contacto-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Aquí puedes agregar la lógica para enviar el formulario
+            alert('✨ ¡Gracias por tu mensaje! Te contactaremos pronto.');
+            this.reset();
+        });
+
+        // ========================================
+        // SCROLL SUAVE
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========================================
+        // INICIALIZAR TODAS LAS GALERÍAS
+        // ========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarProductos('abanicos', 'Abanicos');
+            cargarProductos('decoupage', 'Decoupage');
+            cargarProductos('pantallas', 'Pantallas');
+            cargarProductos('bolsos', 'Bolsos & Carteras');
+            cargarProductos('accesorios', 'Accesorios');
+            cargarProductos('ropa', 'Ropa & Complementos');
+            cargarProductos('zapatillas', 'Zapatillas');
+            cargarProductos('cristaleria', 'Cristalería');
+            cargarProductos('joyeria', 'Joyería');
+        });
+    </script>
+</body>
+</html>
